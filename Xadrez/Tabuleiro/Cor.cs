@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tabuleiro
+namespace tabuleiro
 {
     enum Cor
     {
@@ -14,6 +14,5 @@ namespace Tabuleiro
         Verde,
         Laranja,
         Rosa
-
     }
 }
