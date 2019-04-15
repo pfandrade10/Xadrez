@@ -10,6 +10,7 @@ namespace JogoXadrez
         public Tabuleiro Tab { get; private set; }
         public int Turno { get; private set; }
         public Cor JogadorAtual { get; private set; }
+        public bool Terminada { get; private set; }  
 
         public MecanicaXadrez()
         {

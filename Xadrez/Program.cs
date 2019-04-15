@@ -1,6 +1,7 @@
 ﻿using System;
 using tabuleiro;
 using JogoXadrez;
+using JogoXadrez;
 
 namespace Xadrez
 {
@@ -13,8 +14,18 @@ namespace Xadrez
 
                 MecanicaXadrez partida = new MecanicaXadrez();
 
+                while (!partida.Terminada)
+                {
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partida.Tab);
+                    Console.Write("Origem: ");
+                    Posicao origem = Tela.LerPosicaoXadrez().ToPosicao();
+                    Console.Write("Destino: ");
+                    Posicao destino = Tela.LerPosicaoXadrez().ToPosicao();
 
-                Tela.ImprimirTabuleiro(partida.Tab);
+                    partida.ExecutarMovimento(origem, destino);
+                }
+                
             }
             catch (TabuleiroException e)
             {
