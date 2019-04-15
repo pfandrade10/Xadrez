@@ -17,6 +17,7 @@ namespace JogoXadrez
             Tab = new Tabuleiro(8, 8);
             Turno = 1;
             JogadorAtual = Cor.Branco;
+            Terminada = false;
             InserirPecas();
         }       
 
@@ -26,6 +27,49 @@ namespace JogoXadrez
             p.IncrementarQuantidadeDeMovimento();
             Peca PecaCapturada = Tab.RetirarPeca(destino);
             Tab.ColocarPeca(p, destino);
+        }
+
+        public void ExecutarJogada(Posicao origem, Posicao destino)
+        {
+            ExecutarMovimento(origem, destino);
+            Turno++;
+            MudarJogador();
+        }
+
+        public void ValidarPosicaoDeOrigem(Posicao pos)
+        {
+            if (Tab.Peca(pos) is null)
+            {
+                throw new TabuleiroException("Não existe peça na posição de origem informada!");
+            }
+            if(JogadorAtual != Tab.Peca(pos).Cor)
+            {
+                throw new TabuleiroException("Peça escolhida não é do jogador atual!");
+            }
+            if (!Tab.Peca(pos).ExisteMovimentoPossivel())
+            {
+                throw new TabuleiroException("A peça escolhida nao tem movimentos possíveis!");
+            }
+        }
+
+        public void ValidarPosicaoDeDestino(Posicao origem, Posicao destino)
+        {
+            if (!Tab.Peca(origem).PodeMoverPara(destino))
+            {
+                throw new TabuleiroException("Posiçõ de destino inválida!");
+            }
+        }
+
+        private void MudarJogador()
+        {
+            if( JogadorAtual == Cor.Branco)
+            {
+                JogadorAtual = Cor.Preto;
+            }
+            else
+            {
+                JogadorAtual = Cor.Branco;
+            }
         }
 
         private void InserirPecas()
