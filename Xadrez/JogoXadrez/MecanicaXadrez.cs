@@ -90,6 +90,21 @@ namespace JogoXadrez
                 DesfazerMovimento(origem, destino, PecaCapturada);
                 throw new TabuleiroException("Você não pode se colocar em xeque!");
             }
+
+            Peca p = Tab.Peca(destino);
+            // #jogadaEspecial Promoção
+            if (p is Peao)
+            {
+                if (p.Cor == Cor.Branco && destino.Linha == 0 || (p.Cor == Cor.Preto && destino.Linha == 7))
+                {
+                    p = Tab.RetirarPeca(destino);
+                    Pecas.Remove(p);
+                    Peca rainha = new Rainha(p.Cor, Tab);
+                    Tab.ColocarPeca(rainha, destino);
+                    Pecas.Add(rainha);
+                }
+            }
+
             if (EstaEmXeque(Adversario(JogadorAtual)))
             {
                 Xeque = true;
@@ -97,7 +112,8 @@ namespace JogoXadrez
             else
             {
                 Xeque = false;
-            }      
+            }  
+            
             if (XequeMate(Adversario(JogadorAtual)))
             {
                 Terminada = true;
@@ -106,9 +122,7 @@ namespace JogoXadrez
             {
                 Turno++;
                 MudarJogador();
-            }
-
-            Peca p = Tab.Peca(destino);
+            }          
 
             // #JogadaEspecial en passant
             if (p is Peao && (destino.Linha == origem.Linha - 2) || destino.Linha == origem.Linha + 2)
