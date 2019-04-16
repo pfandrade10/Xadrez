@@ -12,6 +12,7 @@ namespace Xadrez
             {
                 MecanicaXadrez partida = new MecanicaXadrez();
 
+
                 while (!partida.Terminada)
                 {
                     try
